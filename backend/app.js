@@ -5,7 +5,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error'); // Ensure the path is correct
-
 require('dotenv').config(); // Load environment variables
 
 // Import routes
@@ -15,16 +14,16 @@ const jobTypeRoutes = require('./routes/jobtyperoutes');
 const jobRoutes = require('./routes/Jobsroutes');
 const adminRoutes = require('./routes/adminroutes');
 
+// Create Express app
+const app = express();
+
 // Database connection
-mongoose.connect(process.env.MONGODB_URI, { // Ensure your environment variable is correct
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
 .then(() => console.log('Database connected'))
 .catch(err => console.error('Database connection error:', err));
-
-// Create Express app
-const app = express();
 
 // Middleware
 app.use(morgan('dev'));
@@ -38,7 +37,6 @@ const corsOptions = {
     methods: 'GET, POST, PUT, DELETE, OPTIONS',
     credentials: true, // Allow credentials if needed
 };
-
 app.use(cors(corsOptions));
 
 // Route middleware
