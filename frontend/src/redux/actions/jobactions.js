@@ -21,7 +21,7 @@ import {
 export const jobLoadAction = (pageNumber = 0, keyword = '', cat = '', location = '') => async (dispatch) => {
     dispatch({ type: JOB_LOAD_REQUEST });
     try {
-        const { data } = await axios.get(`/api/jobs`, {
+        const { data } = await axios.get(`https://listing-sites.onrender.com/api/jobs`, {
             params: {
                 pageNumber,
                 keyword,
@@ -48,7 +48,7 @@ export const jobLoadAction = (pageNumber = 0, keyword = '', cat = '', location =
 export const jobLoadSingleAction = (id) => async (dispatch) => {
     dispatch({ type: JOB_LOAD_SINGLE_REQUEST });
     try {
-        const { data } = await axios.get(`/api/jobs/${id}`,{
+        const { data } = await axios.get(`https://listing-sites.onrender.com/api/jobs/${id}`,{
             headers: { 'Cache-Control': 'no-cache' },
         });
         dispatch({
@@ -66,7 +66,7 @@ export const jobLoadSingleAction = (id) => async (dispatch) => {
 export const deleteSingleJobAction = (job_id) => async (dispatch) => {
     dispatch({ type: DELETE_JOB_REQUEST });
     try {
-        const { data } = await axios.delete(`/api/job/delete/${job_id}`);
+        const { data } = await axios.delete(`https://listing-sites.onrender.com/api/job/delete/${job_id}`);
         dispatch({
             type: DELETE_JOB_SUCCESS,
             payload: data
@@ -85,7 +85,7 @@ export const deleteSingleJobAction = (job_id) => async (dispatch) => {
 export const editSingleJobAction = (job) => async (dispatch) => {
     dispatch({ type: EDIT_JOB_REQUEST });
     try {
-        const { data } = await axios.put(`/api/jobs/${job._id}`, job);
+        const { data } = await axios.put(`https://listing-sites.onrender.com/api/jobs/${job._id}`, job);
         dispatch({
             type: EDIT_JOB_SUCCESS,
             payload: data
@@ -106,7 +106,7 @@ export const registerAjobAction = (job) => async (dispatch) => {
     dispatch({ type: REGISTER_JOB_REQUEST })
 
     try {
-        const { data } = await axios.post("/api/jobs/create", job)
+        const { data } = await axios.post("https://listing-sites.onrender.com/api/jobs/create", job)
         dispatch({
             type: REGISTER_JOB_SUCCESS,
             payload: data
