@@ -32,7 +32,13 @@ app.use(bodyparser.urlencoded({
     extended:true
 }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(
+    {
+        origin:["https://deploye-vercel.app"],
+        methods:['POST','GET','PUT','DELETE'],
+        credentials:true
+    }
+));
 
 app.use('/api',authroutes);
 app.use('/api',userroutes);
