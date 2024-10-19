@@ -34,7 +34,7 @@ app.use(bodyparser.urlencoded({
 app.use(cookieParser());
 app.use(cors(
     {
-        origin:["http://localhost:3001"],
+        origin:["https://listing-sites-8a43.vercel.app"],
         methods:['POST','GET','PUT','DELETE'],
         credentials:true
     }
