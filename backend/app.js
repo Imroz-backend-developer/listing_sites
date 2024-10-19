@@ -34,7 +34,7 @@ app.use(bodyparser.urlencoded({
 app.use(cookieParser());
 app.use(cors(
     {
-        origin:["https://deploye-vercel.app"],
+        origin:["http://localhost:3001"],
         methods:['POST','GET','PUT','DELETE'],
         credentials:true
     }
