@@ -1,59 +1,58 @@
-const express=require('express');
-const app=express();
-const morgan=require('morgan');
-const bodyparser=require('body-parser');
-require('dotenv').config();
-let cors=require('cors');
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const errorhandler=require('./middelware/error')
+const errorHandler = require('./middleware/error'); // Ensure the path is correct
 
-//import routes
-const authroutes=require('./routes/authroutes')
-const userroutes=require('./routes/userroutes')
-const createJobtype=require('./routes/jobtyperoutes')
-const createJobs=require('./routes/Jobsroutes')
+require('dotenv').config(); // Load environment variables
+
+// Import routes
+const authRoutes = require('./routes/authroutes');
+const userRoutes = require('./routes/userroutes');
+const jobTypeRoutes = require('./routes/jobtyperoutes');
+const jobRoutes = require('./routes/Jobsroutes');
 const adminRoutes = require('./routes/adminroutes');
 
-//const MongoUrl='mongodb+srv://imroz32492:Imroz@123@cluster0.ne96a.mongodb.net/'
-
-//database connection
-mongoose.connect(process.env.mongourl,{
+// Database connection
+mongoose.connect(process.env.MONGODB_URI, { // Ensure your environment variable is correct
     useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(()=> console.log('Db connected'))
-    .catch((err)=> console.log(err));
+    useUnifiedTopology: true,
+})
+.then(() => console.log('Database connected'))
+.catch(err => console.error('Database connection error:', err));
 
-//Middelware
+// Create Express app
+const app = express();
+
+// Middleware
 app.use(morgan('dev'));
-app.use(bodyparser.json({limit:'5mb'}));
-app.use(bodyparser.urlencoded({
-    limit:'5mb',
-    extended:true
-}));
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
+
+// CORS configuration
 const corsOptions = {
-  origin: 'https://listing-sites-8a43.vercel.app', // Your frontend URL
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  credentials: true, // Allow credentials if needed
+    origin: 'https://listing-sites-8a43.vercel.app', // Your frontend URL
+    methods: 'GET, POST, PUT, DELETE, OPTIONS',
+    credentials: true, // Allow credentials if needed
 };
 
 app.use(cors(corsOptions));
 
-app.use('/api',authroutes);
-app.use('/api',userroutes);
-app.use('/api',createJobtype);
-app.use('/api',createJobs);
+// Route middleware
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
+app.use('/api', jobTypeRoutes);
+app.use('/api', jobRoutes);
 app.use('/api', adminRoutes);
 
-//error middelware
+// Error handling middleware
+app.use(errorHandler);
 
-app.use(errorhandler);
-
-
-//Server port
-const port=process.env.Port;
-
-app.listen(port,()=>{
-    console.log(`Server run : ${port}`)
+// Server port
+const PORT = process.env.PORT || 5000; // Default to port 5000 if not specified
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
 });
