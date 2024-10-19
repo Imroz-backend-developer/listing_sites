@@ -41,7 +41,7 @@ export const fetchAdminStats = () => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.get("/api/admin/stats", config); // Change the endpoint as needed
+        const { data } = await axios.get("https://listing-sites.onrender.com/api/admin/stats", config); // Change the endpoint as needed
         dispatch({
             type: 'ADMIN_STATS_SUCCESS',
             payload: data
@@ -67,7 +67,7 @@ export const userSignInAction = (user) => async (dispatch) => {
             }
         };
         // Fix the URL typo here
-        const { data } = await axios.post("/api/Singin", user,config);
+        const { data } = await axios.post("https://listing-sites.onrender.com/api/Singin", user,config);
 
         // Store user data in localStorage
         localStorage.setItem('userInfo', JSON.stringify(data));
@@ -102,7 +102,7 @@ export const userSignUpAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNUP_REQUEST });
 
     try {
-        const { data } = await axios.post("/api/Singup", user); // Ensure this endpoint is correct
+        const { data } = await axios.post("https://listing-sites.onrender.com/api/Singup", user); // Ensure this endpoint is correct
 
         dispatch({
             type: USER_SIGNUP_SUCCESS,
@@ -123,7 +123,7 @@ export const userLogoutAction = () => async (dispatch) => {
     dispatch({ type: USER_LOGOUT_REQUEST });
 
     try {
-        const { data } = await axios.get("/api/Logout"); // Ensure this endpoint is correct
+        const { data } = await axios.get("https://listing-sites.onrender.com/api/Logout"); // Ensure this endpoint is correct
         localStorage.removeItem('userInfo');
 
         dispatch({
@@ -145,7 +145,7 @@ export const userProfileAction = () => async (dispatch) => {
     dispatch({ type: USER_LOAD_REQUEST });
 
     try {
-        const { data } = await axios.get("/api/me", {
+        const { data } = await axios.get("https://listing-sites.onrender.com/api/me", {
             headers: { 'Cache-Control': 'no-cache' },
         });
 
@@ -166,7 +166,7 @@ export const allUserAction = () => async (dispatch) => {
     dispatch({ type: ALL_USER_LOAD_REQUEST });
 
     try {
-        const { data } = await axios.get('/api/alluser', {
+        const { data } = await axios.get('https://listing-sites.onrender.com/api/alluser', {
             headers: { 'Cache-Control': 'no-cache' },
         });
 
@@ -187,7 +187,7 @@ export const userApplyJobAction = (job) => async (dispatch) => {
     dispatch({ type: USER_APPLY_JOB_REQUEST });
 
     try {
-        const { data } = await axios.post("/api/user/jobhistory", job);
+        const { data } = await axios.post("https://listing-sites.onrender.com/api/user/jobhistory", job);
 
         dispatch({
             type: USER_APPLY_JOB_SUCCESS,
@@ -208,7 +208,7 @@ export const deleteUserAction = (id) => async (dispatch) => {
     dispatch({ type: DELETE_USER_REQUEST });
 
     try {
-        await axios.delete(`/api/user/delete/${id}`);
+        await axios.delete(`https://listing-sites.onrender.com/api/user/delete/${id}`);
         dispatch({ type: DELETE_USER_SUCCESS, payload: id });
     } catch (error) {
         dispatch({ type: DELETE_USER_FAIL, payload: error.message });
@@ -221,7 +221,7 @@ export const getUserDetails = (id) => async (dispatch) => {
 
     try {
         const token = localStorage.getItem('token'); // Ensure you're storing the token correctly
-        const { data } = await axios.get(`/api/User/${id}`, {
+        const { data } = await axios.get(`https://listing-sites.onrender.com/api/User/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -247,7 +247,7 @@ export const updateUserAction = (userData) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(`/api/User/edit/${userData._id}`, userData, config);
+        const { data } = await axios.put(`https://listing-sites.onrender.com/api/User/edit/${userData._id}`, userData, config);
 
         dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
     } catch (error) {
