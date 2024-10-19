@@ -21,17 +21,14 @@ export const jobTypeLoadAction = () => async (dispatch) => {
             payload: data
         });
     } catch (error) {
-        // Check if the error response exists and has a specific message
-        const errorMessage = error.response && error.response.data 
-            ? error.response.data.error 
-            : error.message; // Fallback to error.message
-
+        console.error('Error fetching job types:', error); // Log the error
         dispatch({
             type: JOB_TYPE_LOAD_FAIL,
-            payload: errorMessage
+            payload: error.response ? error.response.data.error : 'Error fetching data'
         });
     }
-}
+};
+
 // create jobs category
 export const createJobTypeAction = (jobtype) => async (dispatch) => {
     dispatch({ type: CREATE_JOB_TYPE_REQUEST })
