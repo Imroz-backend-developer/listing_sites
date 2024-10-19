@@ -33,7 +33,9 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://listing-sites-8a43.vercel.app' // Allow requests from this origin
+  origin: ['https://listing-sites-8a43.vercel.app', 'http://another-origin.com'], // Add other allowed origins here
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true // If you need to send cookies or HTTP auth
 }));
 app.use('/api',authroutes);
 app.use('/api',userroutes);
