@@ -32,12 +32,14 @@ app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
 
 // CORS configuration
+// Configure CORS options
 const corsOptions = {
-    origin: 'https://listing-sites-8a43.vercel.app', // Your frontend URL
-    methods: 'GET, POST, PUT, DELETE, OPTIONS',
-    credentials: true, // Allow credentials if needed
+    origin: ['https://listing-sites-8a43.vercel.app'], // Replace with your frontend URL
+    methods: ['GET, POST, PUT, DELETE, OPTIONS'],
+    credentials: true, // Allow credentials if needed (e.g., cookies, HTTP authentication)
 };
-app.use(cors(corsOptions));
+
+app.use(cors(corsOptions)); // Apply CORS configuration
 
 // Route middleware
 app.use('/api', authRoutes);
