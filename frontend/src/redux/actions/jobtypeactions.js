@@ -21,9 +21,14 @@ export const jobTypeLoadAction = () => async (dispatch) => {
             payload: data
         });
     } catch (error) {
+        // Check if the error response exists and has a specific message
+        const errorMessage = error.response && error.response.data 
+            ? error.response.data.error 
+            : error.message; // Fallback to error.message
+
         dispatch({
             type: JOB_TYPE_LOAD_FAIL,
-            payload: error.response.data.error
+            payload: errorMessage
         });
     }
 }
