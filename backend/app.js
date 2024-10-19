@@ -32,11 +32,14 @@ app.use(bodyparser.urlencoded({
     extended:true
 }));
 app.use(cookieParser());
-app.use(cors({
-  origin: ['https://listing-sites-8a43.vercel.app', 'http://another-origin.com'], // Add other allowed origins here
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  credentials: true // If you need to send cookies or HTTP auth
-}));
+const corsOptions = {
+  origin: 'https://listing-sites-8a43.vercel.app', // Your frontend URL
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  credentials: true, // Allow credentials if needed
+};
+
+app.use(cors(corsOptions));
+
 app.use('/api',authroutes);
 app.use('/api',userroutes);
 app.use('/api',createJobtype);
